@@ -1,15 +1,30 @@
 <script lang="ts">
 import { defineComponent } from "vue";
+import Plus from "../../node_modules/vue-material-design-icons/plus.vue";
 
 export default defineComponent({
-  components: {},
+  components: { Plus },
+  props: ["onInsert"],
+  methods: {
+    onSubmit(e: Event) {
+      e.preventDefault();
+      this.text.trim();
+      this.onInsert(this.text);
+      this.text = "";
+    },
+  },
+  data() {
+    return {
+      text: "",
+    };
+  },
 });
 </script>
 
 <template>
-  <form class="TodoInsert">
-    <input type="text" placeholder="할 일을 입력하세요" />
-    <button type="submit">+</button>
+  <form class="TodoInsert" v-on:submit="onSubmit">
+    <input type="text" v-model="text" placeholder="할 일을 입력하세요" />
+    <button type="submit"><Plus /></button>
   </form>
 </template>
 

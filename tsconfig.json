@@ -11,9 +11,12 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "allowJs": true
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "allowJs": true,
+    "jsx": "preserve",
+    "declaration": true
   },
-
+  "noimplicitAny": false,
   "references": [
     {
       "path": "./tsconfig.config.json"

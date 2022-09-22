@@ -6,14 +6,32 @@ export default defineComponent({
   components: {
     TodoListItem,
   },
+  props: {
+    todos: {
+      type: Array<{ id: number; text: string; done: boolean }>,
+      required: true,
+    },
+    onRemove: {
+      type: Function,
+      required: true,
+    },
+    onToggle: {
+      type: Function,
+      required: true,
+    },
+  },
 });
 </script>
 
 <template>
   <div class="TodoList">
-    <TodoListItem />
-    <TodoListItem />
-    <TodoListItem />
+    <TodoListItem
+      v-for="todo in todos"
+      :key="todo.id"
+      :todo="todo"
+      :onRemove="onRemove"
+      :onToggle="onToggle"
+    />
   </div>
 </template>
 

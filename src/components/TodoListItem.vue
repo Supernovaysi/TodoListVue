@@ -1,11 +1,34 @@
+<script lang="ts">
+import { defineComponent } from "vue";
+import DeleteForever from "../../node_modules/vue-material-design-icons/DeleteForever.vue";
+
+export default defineComponent({
+  components: { DeleteForever },
+  props: {
+    todo: {
+      type: Object,
+      required: true,
+    },
+    onRemove: {
+      type: Function,
+      required: true,
+    },
+    onToggle: {
+      type: Function,
+      required: true,
+    },
+  },
+});
+</script>
+
 <template>
   <div class="TodoListItem">
     <div class="checkbox">
-      <input type="checkbox" />
-      <div class="text">할 일</div>
+      <input type="checkbox" :checked="todo.done" @click="onToggle(todo.id)" />
+      <div class="text" :class="{ checked: todo.done }">{{ todo.text }}</div>
     </div>
-    <div class="remove">
-      <CallMadeIcon />
+    <div class="remove" @click="() => onRemove(todo.id)">
+      <DeleteForever />
     </div>
   </div>
 </template>
@@ -17,8 +40,25 @@
   align-items: center;
   justify-content: space-between;
 }
-.TodoListItem :nth-child(even) {
+.TodoListItem:nth-of-type(even) {
   background: #f8f9fa;
+}
+
+.TodoListItem .checkbox {
+  cursor: pointer;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.TodoListItem .checkbox .text {
+  margin-left: 0.5rem;
+  flex: 1;
+}
+
+.TodoListItem .text.checked {
+  color: #adb5bd;
+  text-decoration: line-through;
 }
 
 .checkbox {
@@ -86,6 +126,10 @@
 
 .remove:hover {
   color: #495057;
+}
+
+.remove:active {
+  color: #adb5bd;
 }
 
 .TodoListItem + .TodoListItem {
