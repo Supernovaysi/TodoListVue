@@ -10,7 +10,7 @@ export default defineComponent({
   },
   props: {
     todos: {
-      type: Array,
+      type: Array<{ id: number; text: string; done: boolean }>,
       required: true,
     },
     onInsert: {

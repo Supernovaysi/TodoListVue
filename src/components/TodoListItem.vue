@@ -1,9 +1,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-import DeleteForever from "../../node_modules/vue-material-design-icons/DeleteForever.vue";
+import DeleteForever from "vue-material-design-icons/DeleteForever.vue";
+import CheckBoxBlankOutline from "vue-material-design-icons/CheckBoxBlankOutline.vue";
+import CheckBoxOutline from "vue-material-design-icons/CheckBoxOutline.vue";
 
 export default defineComponent({
-  components: { DeleteForever },
+  components: { DeleteForever, CheckBoxBlankOutline, CheckBoxOutline },
   props: {
     todo: {
       type: Object,
@@ -24,7 +26,15 @@ export default defineComponent({
 <template>
   <div class="TodoListItem">
     <div class="checkbox">
+      <div v-if="todo.done" class="done" @click="onToggle(todo.id)">
+        <CheckBoxOutline />
+      </div>
+      <div v-else class="undone" @click="onToggle(todo.id)">
+        <CheckBoxBlankOutline />
+      </div>
+      <!--
       <input type="checkbox" :checked="todo.done" @click="onToggle(todo.id)" />
+      -->
       <div class="text" :class="{ checked: todo.done }">{{ todo.text }}</div>
     </div>
     <div class="remove" @click="() => onRemove(todo.id)">
@@ -66,6 +76,22 @@ export default defineComponent({
   flex: 1;
   display: flex;
   align-items: center;
+}
+
+.checkbox .done {
+  color: #20c997;
+}
+
+.checkbox .done:hover {
+  color: #12a176;
+}
+
+.checkbox .undone {
+  color: #adb5bd;
+}
+
+.checkbox .undone:hover {
+  color: #77828d;
 }
 
 .checkbox input {

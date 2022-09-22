@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-import Plus from "../../node_modules/vue-material-design-icons/plus.vue";
+import Plus from "vue-material-design-icons/plus.vue";
 
 export default defineComponent({
   components: { Plus },
