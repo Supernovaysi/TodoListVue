@@ -4,7 +4,12 @@ import Plus from "vue-material-design-icons/plus.vue";
 
 export default defineComponent({
   components: { Plus },
-  props: ["onInsert"],
+  props: {
+    onInsert: {
+      type: Function,
+      required: true,
+    },
+  },
   methods: {
     onSubmit(e: Event) {
       e.preventDefault();
