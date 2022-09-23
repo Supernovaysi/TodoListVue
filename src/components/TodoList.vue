@@ -1,4 +1,6 @@
 <script lang="ts">
+import { useTodoListStore } from "@/stores";
+import { mapActions, mapState } from "pinia";
 import { defineComponent } from "vue";
 import TodoListItem from "./TodoListItem.vue";
 
@@ -6,19 +8,11 @@ export default defineComponent({
   components: {
     TodoListItem,
   },
-  props: {
-    todos: {
-      type: Array<{ id: number; text: string; done: boolean }>,
-      required: true,
-    },
-    onRemove: {
-      type: Function,
-      required: true,
-    },
-    onToggle: {
-      type: Function,
-      required: true,
-    },
+  methods: {
+    ...mapActions(useTodoListStore, ["onRemove", "onToggle"]),
+  },
+  computed: {
+    ...mapState(useTodoListStore, ["todoList"]),
   },
 });
 </script>
@@ -26,7 +20,7 @@ export default defineComponent({
 <template>
   <div class="TodoList">
     <TodoListItem
-      v-for="todo in todos"
+      v-for="todo in todoList"
       :key="todo.id"
       :todo="todo"
       :onRemove="onRemove"

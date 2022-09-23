@@ -8,24 +8,6 @@ export default defineComponent({
     TodoInsert,
     TodoList,
   },
-  props: {
-    todos: {
-      type: Array<{ id: number; text: string; done: boolean }>,
-      required: true,
-    },
-    onInsert: {
-      type: Function,
-      required: true,
-    },
-    onRemove: {
-      type: Function,
-      required: true,
-    },
-    onToggle: {
-      type: Function,
-      required: true,
-    },
-  },
 });
 </script>
 
@@ -33,8 +15,8 @@ export default defineComponent({
   <div class="TodoTemplate">
     <div class="app-title">일정 관리</div>
     <div class="content">
-      <TodoInsert :onInsert="onInsert" />
-      <TodoList :todos="todos" :onRemove="onRemove" :onToggle="onToggle" />
+      <TodoInsert />
+      <TodoList />
     </div>
   </div>
 </template>

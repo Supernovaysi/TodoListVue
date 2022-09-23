@@ -32,9 +32,6 @@ export default defineComponent({
       <div v-else class="undone" @click="onToggle(todo.id)">
         <CheckBoxBlankOutline />
       </div>
-      <!--
-      <input type="checkbox" :checked="todo.done" @click="onToggle(todo.id)" />
-      -->
       <div class="text" :class="{ checked: todo.done }">{{ todo.text }}</div>
     </div>
     <div class="remove" @click="() => onRemove(todo.id)">

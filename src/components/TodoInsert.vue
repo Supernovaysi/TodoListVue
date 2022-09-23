@@ -1,16 +1,13 @@
 <script lang="ts">
 import { defineComponent } from "vue";
+import { useTodoListStore } from "@/stores";
 import Plus from "vue-material-design-icons/plus.vue";
+import { mapActions } from "pinia";
 
 export default defineComponent({
   components: { Plus },
-  props: {
-    onInsert: {
-      type: Function,
-      required: true,
-    },
-  },
   methods: {
+    ...mapActions(useTodoListStore, ["onInsert"]),
     onSubmit(e: Event) {
       e.preventDefault();
       this.text.trim();
