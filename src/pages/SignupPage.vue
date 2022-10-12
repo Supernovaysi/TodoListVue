@@ -81,7 +81,6 @@
   width: 100%;
   height: 50px;
   border: none;
-  border-radius: 5px;
   background-color: #22b8cf;
   font-size: 1rem;
   font-weight: bold;

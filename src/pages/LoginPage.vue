@@ -11,8 +11,18 @@
     <h1>Login</h1>
     <form @submit.prevent="handleSubmit">
       <div class="form-input">
-        <input type="text" placeholder="이메일" v-model="username" />
-        <input type="password" placeholder="비밀번호" v-model="password" />
+        <input
+          name="email"
+          type="text"
+          placeholder="이메일"
+          v-model="username"
+        />
+        <input
+          name="password"
+          type="password"
+          placeholder="비밀번호"
+          v-model="password"
+        />
       </div>
       <button class="submit-btn" type="submit">Login</button>
     </form>
@@ -29,9 +39,11 @@ const password = ref("");
 function handleSubmit(e: Event) {
   e.preventDefault();
   const data = new FormData(e.target as HTMLFormElement);
+  console.log(username.value, password.value);
   const email = data.get("email");
-  const password = data.get("password");
-  signin({ email: email, password: password });
+  const pswd = data.get("password");
+  console.log(email, pswd);
+  signin({ email: email, password: pswd });
 }
 </script>
 
@@ -95,15 +107,11 @@ function handleSubmit(e: Event) {
 
 .submit-btn {
   width: 100%;
-  padding: 0.5rem;
+  height: 50px;
+  border: none;
+  background-color: #22b8cf;
   font-size: 1rem;
   font-weight: bold;
-  line-height: 1.5;
-  color: #495057;
-  border: 1px solid #dee2e6;
-  border-radius: 4px;
-  outline: none;
-  background: #22b8cf;
   color: white;
   cursor: pointer;
 }
