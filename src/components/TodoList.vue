@@ -19,6 +19,10 @@ export default defineComponent({
       type: Function,
       required: true,
     },
+    handleEdit: {
+      type: Function,
+      required: true,
+    },
   },
 });
 </script>
@@ -31,6 +35,7 @@ export default defineComponent({
       :todo="todo"
       :onRemove="onRemove"
       :onToggle="onToggle"
+      :handleEdit="handleEdit"
     />
   </div>
 </template>

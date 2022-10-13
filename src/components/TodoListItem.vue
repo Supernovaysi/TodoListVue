@@ -19,6 +19,22 @@ export default defineComponent({
       type: Function,
       required: true,
     },
+    handleEdit: {
+      type: Function,
+      required: true,
+    },
+  },
+  methods: {
+    editTodo(todo: any) {
+      let caches = todo.text;
+      const newTodo = prompt("Edit Todo", todo.text);
+      if (newTodo) {
+        todo.text = newTodo;
+        this.handleEdit(todo.id, newTodo);
+      } else {
+        todo.text = caches;
+      }
+    },
   },
 });
 </script>
@@ -35,7 +51,13 @@ export default defineComponent({
       <!--
       <input type="checkbox" :checked="todo.done" @click="onToggle(todo.id)" />
       -->
-      <div class="text" :class="{ checked: todo.done }">{{ todo.text }}</div>
+      <div
+        class="text"
+        :class="{ checked: todo.done }"
+        @dblclick="editTodo(todo)"
+      >
+        {{ todo.text }}
+      </div>
     </div>
     <div class="remove" @click="() => onRemove(todo.id)">
       <DeleteForever />

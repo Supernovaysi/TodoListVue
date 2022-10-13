@@ -51,6 +51,12 @@ export default defineComponent({
         todo.done = !todo.done;
       }
     },
+    handleEdit(id: number, text: string) {
+      const todo = this.todoList.find((todo) => todo.id === id);
+      if (todo) {
+        todo.text = text;
+      }
+    },
   },
 });
 </script>
@@ -66,6 +72,7 @@ export default defineComponent({
     :onInsert="onInsert"
     :onRemove="onRemove"
     :onToggle="onToggle"
+    :handleEdit="handleEdit"
   />
   <router-view></router-view>
 </template>

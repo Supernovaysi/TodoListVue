@@ -25,6 +25,10 @@ export default defineComponent({
       type: Function,
       required: true,
     },
+    handleEdit: {
+      type: Function,
+      required: true,
+    },
   },
 });
 </script>
@@ -34,7 +38,12 @@ export default defineComponent({
     <div class="app-title">일정 관리</div>
     <div class="content">
       <TodoInsert :onInsert="onInsert" />
-      <TodoList :todos="todos" :onRemove="onRemove" :onToggle="onToggle" />
+      <TodoList
+        :todos="todos"
+        :onRemove="onRemove"
+        :onToggle="onToggle"
+        :handleEdit="handleEdit"
+      />
     </div>
   </div>
 </template>
