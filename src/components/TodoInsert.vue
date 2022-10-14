@@ -13,14 +13,15 @@ export default defineComponent({
   methods: {
     onSubmit(e: Event) {
       e.preventDefault();
-      this.text.trim();
-      this.onInsert(this.text);
-      this.text = "";
+      this.todo.title.trim();
+      this.onInsert(this.todo);
+      console.log(this.todo);
+      this.todo.title = "";
     },
   },
   data() {
     return {
-      text: "",
+      todo: { title: "" },
     };
   },
 });
@@ -28,7 +29,7 @@ export default defineComponent({
 
 <template>
   <form class="TodoInsert" v-on:submit="onSubmit">
-    <input type="text" v-model="text" placeholder="할 일을 입력하세요" />
+    <input type="text" v-model="todo.title" placeholder="할 일을 입력하세요" />
     <button type="submit"><Plus /></button>
   </form>
 </template>

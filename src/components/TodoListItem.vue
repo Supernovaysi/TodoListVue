@@ -15,25 +15,28 @@ export default defineComponent({
       type: Function,
       required: true,
     },
-    onToggle: {
-      type: Function,
-      required: true,
-    },
-    handleEdit: {
+    update: {
       type: Function,
       required: true,
     },
   },
   methods: {
     editTodo(todo: any) {
-      const caches = todo.text;
-      const newTodo = prompt("Edit Todo", todo.text);
-      if (newTodo) {
-        todo.text = newTodo;
-        this.handleEdit(todo.id, newTodo);
-      } else {
-        todo.text = caches;
+      const newTodoTitle = prompt("Edit Todo", todo.title);
+      if (newTodoTitle) {
+        const newTodo = {
+          ...todo,
+          title: newTodoTitle,
+        };
+        this.update(newTodo);
       }
+    },
+    onToggle(todo: any) {
+      const newTodo = {
+        ...todo,
+        done: !todo.done,
+      };
+      this.update(newTodo);
     },
   },
 });
@@ -42,10 +45,10 @@ export default defineComponent({
 <template>
   <div class="TodoListItem">
     <div class="checkbox">
-      <div v-if="todo.done" class="done" @click="onToggle(todo.id)">
+      <div v-if="todo.done" class="done" @click="onToggle(todo)">
         <CheckBoxOutline />
       </div>
-      <div v-else class="undone" @click="onToggle(todo.id)">
+      <div v-else class="undone" @click="onToggle(todo)">
         <CheckBoxBlankOutline />
       </div>
       <!--
@@ -56,10 +59,10 @@ export default defineComponent({
         :class="{ checked: todo.done }"
         @dblclick="editTodo(todo)"
       >
-        {{ todo.text }}
+        {{ todo.title }}
       </div>
     </div>
-    <div class="remove" @click="() => onRemove(todo.id)">
+    <div class="remove" @click="() => onRemove(todo)">
       <DeleteForever />
     </div>
   </div>

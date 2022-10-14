@@ -1,69 +1,32 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import TodoTemplate from "../components/TodoTemplate.vue";
+import { call } from "../lib/api";
 
 onMounted(() => {
-  const requestOprions = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-
-  fetch("http://localhost:8080/todos", requestOprions)
-    .then((response) => response.json())
-    .then((data) => {
-      todoList.value = data;
-    })
-    .catch((e) => {
-      error.value = e;
-    });
+  call("/todo", "GET", null).then((response) => {
+    (todoList.value = response.data), (loading.value = false);
+  });
 });
 
-const todoList = ref([
-  {
-    id: 1,
-    text: "vue3",
-    done: true,
-  },
-  {
-    id: 2,
-    text: "typescript",
-    done: true,
-  },
-  {
-    id: 3,
-    text: "vite",
-    done: false,
-  },
-]);
+const todoList = ref([] as any[]);
+const loading = ref(true);
 
-const id = ref(4);
-const error = ref("");
-
-function onInsert(text: string) {
-  const todo = {
-    id: id.value++,
-    text,
-    done: false,
-  };
-  todoList.value.push(todo);
-  //console.log(this.todoList, this.id);
+function onInsert(item: any) {
+  console.log(item);
+  call("/todo", "POST", item).then(
+    (response) => (todoList.value = response.data),
+  );
 }
-function onRemove(id: number) {
-  todoList.value = todoList.value.filter((todo) => todo.id !== id);
+function onRemove(item: any) {
+  call("/todo", "DELETE", item).then(
+    (response) => (todoList.value = response.data),
+  );
 }
-function onToggle(id: number) {
-  const todo = todoList.value.find((todo) => todo.id === id);
-  if (todo) {
-    todo.done = !todo.done;
-  }
-}
-function handleEdit(id: number, text: string) {
-  const todo = todoList.value.find((todo) => todo.id === id);
-  if (todo) {
-    todo.text = text;
-  }
+function update(item: any) {
+  call("/todo", "PUT", item).then(
+    (response) => (todoList.value = response.data),
+  );
 }
 </script>
 
@@ -77,8 +40,7 @@ function handleEdit(id: number, text: string) {
     :todos="todoList"
     :onInsert="onInsert"
     :onRemove="onRemove"
-    :onToggle="onToggle"
-    :handleEdit="handleEdit"
+    :update="update"
   />
 </template>
 

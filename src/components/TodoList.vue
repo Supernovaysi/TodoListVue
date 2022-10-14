@@ -15,11 +15,7 @@ export default defineComponent({
       type: Function,
       required: true,
     },
-    onToggle: {
-      type: Function,
-      required: true,
-    },
-    handleEdit: {
+    update: {
       type: Function,
       required: true,
     },
@@ -34,8 +30,7 @@ export default defineComponent({
       :key="todo.id"
       :todo="todo"
       :onRemove="onRemove"
-      :onToggle="onToggle"
-      :handleEdit="handleEdit"
+      :update="update"
     />
   </div>
 </template>
