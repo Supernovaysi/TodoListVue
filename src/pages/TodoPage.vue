@@ -1,8 +1,26 @@
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
 import TodoTemplate from "../components/TodoTemplate.vue";
 
-var todoList = ref([
+onMounted(() => {
+  const requestOprions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  fetch("http://localhost:8080/todos", requestOprions)
+    .then((response) => response.json())
+    .then((data) => {
+      todoList.value = data;
+    })
+    .catch((e) => {
+      error.value = e;
+    });
+});
+
+const todoList = ref([
   {
     id: 1,
     text: "vue3",
@@ -20,45 +38,33 @@ var todoList = ref([
   },
 ]);
 
-var id = ref(4);
+const id = ref(4);
+const error = ref("");
 
-export default defineComponent({
-  components: {
-    TodoTemplate,
-  },
-  data() {
-    return {
-      todoList,
-      id,
-    };
-  },
-  methods: {
-    onInsert(text: string) {
-      const todo = {
-        id: this.id++,
-        text,
-        done: false,
-      };
-      this.todoList.push(todo);
-      //console.log(this.todoList, this.id);
-    },
-    onRemove(id: number) {
-      this.todoList = this.todoList.filter((todo) => todo.id !== id);
-    },
-    onToggle(id: number) {
-      const todo = this.todoList.find((todo) => todo.id === id);
-      if (todo) {
-        todo.done = !todo.done;
-      }
-    },
-    handleEdit(id: number, text: string) {
-      const todo = this.todoList.find((todo) => todo.id === id);
-      if (todo) {
-        todo.text = text;
-      }
-    },
-  },
-});
+function onInsert(text: string) {
+  const todo = {
+    id: id.value++,
+    text,
+    done: false,
+  };
+  todoList.value.push(todo);
+  //console.log(this.todoList, this.id);
+}
+function onRemove(id: number) {
+  todoList.value = todoList.value.filter((todo) => todo.id !== id);
+}
+function onToggle(id: number) {
+  const todo = todoList.value.find((todo) => todo.id === id);
+  if (todo) {
+    todo.done = !todo.done;
+  }
+}
+function handleEdit(id: number, text: string) {
+  const todo = todoList.value.find((todo) => todo.id === id);
+  if (todo) {
+    todo.text = text;
+  }
+}
 </script>
 
 <template>
@@ -74,7 +80,6 @@ export default defineComponent({
     :onToggle="onToggle"
     :handleEdit="handleEdit"
   />
-  <router-view></router-view>
 </template>
 
 <style>

@@ -26,7 +26,7 @@ export default defineComponent({
   },
   methods: {
     editTodo(todo: any) {
-      let caches = todo.text;
+      const caches = todo.text;
       const newTodo = prompt("Edit Todo", todo.text);
       if (newTodo) {
         todo.text = newTodo;
