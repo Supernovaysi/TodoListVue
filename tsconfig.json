@@ -6,7 +6,13 @@
     "src/**/*.vue",
     "node_modules/vue-meterial-design-icons/**/*"
   ],
+  "ts-node": {
+    "esm": true
+  },
   "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
@@ -14,7 +20,8 @@
     "typeRoots": ["./node_modules/@types", "./src/types"],
     "allowJs": true,
     "jsx": "preserve",
-    "declaration": true
+    "declaration": true,
+    "preserveValueImports": false
   },
   "noimplicitAny": false,
   "references": [
